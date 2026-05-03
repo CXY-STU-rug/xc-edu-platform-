@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/xcplus_orders?serverTimezone=UTC&userUnicode=true&useSSL=false&
+    username: root
+    password: 123456
+
+xxl:
+  job:
+    admin:
+      addresses: http://localhost:8088/xxl-job-admin
+    executor:
+      appname: payresultnotify-job
+      address:
+      ip:
+      port: 8989
+      logpath: /data/applogs/xxl-job/jobhandler
+      logretentiondays: 30
+    accessToken: default_token
+
+pay:
+  qrcodeurl: https://qr.alipay.com/bax03911fhqcbnvtqg2t002a
+  alipay:
+    APP_ID: 2021000000000000
+    APP_PRIVATE_KEY: dev_placeholder_app_private_key
+    ALIPAY_PUBLIC_KEY: dev_placeholder_alipay_public_key
