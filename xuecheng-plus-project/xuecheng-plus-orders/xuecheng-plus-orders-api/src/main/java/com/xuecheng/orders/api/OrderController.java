@@ -6,6 +6,7 @@ import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.internal.util.AlipaySignature;
 import com.alipay.api.request.AlipayTradeWapPayRequest;
 import com.xuecheng.base.exception.XueChengPlusException;
+import com.xuecheng.base.idempotent.Idempotent;
 import com.xuecheng.orders.config.AlipayConfig;
 import com.xuecheng.orders.model.dto.AddOrderDto;
 import com.xuecheng.orders.model.dto.PayRecordDto;
@@ -59,6 +60,8 @@ public class OrderController {
     @ApiOperation("生成支付二维码")
     @PostMapping("/generatepaycode")
     @ResponseBody
+    //幂等控制：同一选课记录(outBusinessId) 30 秒窗口内只允许创建一次订单，防止连续点击产生重复待支付单
+    @Idempotent(keyPrefix = "order:create", key = "#addOrderDto.outBusinessId", expireSeconds = 30)
     public PayRecordDto generatePayCode(@RequestBody @Validated AddOrderDto addOrderDto) { //@Validated 触发 JSR303 校验，失败由全局异常处理器统一返回 400
 
         SecurityUtil.XcUser user = SecurityUtil.getUser();
