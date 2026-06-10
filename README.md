@@ -43,11 +43,11 @@
                                                             ▼
    ┌────────────┬────────────┬────────────┬────────────┬───────────┐
    │ auth-svc   │ content-api│ media-api  │ learning   │ orders    │
-   │ (63080)    │ (63040)    │ (63050)    │ (63060)    │ (63030)   │
+   │ (63070)    │ (63040)    │ (63050)    │ (63020)    │ (63030)   │
    └────────────┴────────────┴────────────┴────────────┴───────────┘
    ┌────────────┬────────────┐
    │ system-api │ search     │              ┌──────────────────┐
-   │ (63110)    │ (63070)    │ ←─── ES ──→  │ Nacos / RabbitMQ │
+   │ (63110)    │ (63080)    │ ←─── ES ──→  │ Nacos / RabbitMQ │
    └────────────┴────────────┘              │ MySQL / xxl-job   │
                 ↑                           │ MinIO / Redis     │
                 └──── checkcode (63075) ─── └──────────────────┘
@@ -80,14 +80,14 @@
 | 模块 | 端口 | 主要职责 |
 |---|---|---|
 | `xuecheng-plus-gateway` | 63010 | 路由、JWT 校验、白名单 |
-| `xuecheng-plus-auth` | 63080 | OAuth2 服务、用户密码模式 |
+| `xuecheng-plus-auth` | 63070 | OAuth2 服务、用户密码模式 |
 | `xuecheng-plus-checkcode` | 63075 | 验证码生成 |
 | `xuecheng-plus-content-api` | 63040 | 课程 CRUD、审核、发布、模板渲染 |
 | `xuecheng-plus-media-api` | 63050 | 媒资上传（含分块）、Feign 给 content 调 |
-| `xuecheng-plus-learning-api` | 63060 | 选课、我的课程表、获取视频地址 |
+| `xuecheng-plus-learning-api` | 63020 | 选课、我的课程表、获取视频地址 |
 | `xuecheng-plus-orders-api` | 63030 | 订单、支付二维码、支付宝下单/回调 |
 | `xuecheng-plus-system-api` | 63110 | 数据字典 |
-| `xuecheng-plus-search` | 63070 | ES 课程检索 |
+| `xuecheng-plus-search` | 63080 | ES 课程检索 |
 
 ---
 
@@ -112,7 +112,7 @@ bash import-nacos-config.sh
 # 3. Maven 编译微服务（首次）
 cd xuecheng-plus-project && mvn clean package -DskipTests
 
-# 4. 启动 Java 微服务（content-api 必须 exploded 模式跑，见下文）
+# 4. 启动 Java 微服务（v2.0 修复模板加载后，content-api 可直接以 fat jar 启动）
 cd .. && bash start-services.sh
 
 # 5. 配置 hosts（管理员）
@@ -144,10 +144,11 @@ cd .. && bash start-services.sh
 3. Nacos 配置 POST 必须带 `tenant=dev402`，否则落 public 命名空间
 
 ### 运行时
-4. **`CoursePublishServiceImpl:201`** 用 `new File(getResource("/").getPath() + "/templates/")` 装载 Freemarker 模板，IDE OK 但 fat jar 启动报 `FileNotFoundException`
-   → **绕过：** 把 jar 解压成 exploded 目录，用 `java -cp 'BOOT-INF/classes;BOOT-INF/lib/*' com.xuecheng.ContentApplication -Dfile.encoding=UTF-8` 启动
+4. **`CoursePublishServiceImpl`** 用 `new File(getResource("/").getPath() + "/templates/")` 装载 Freemarker 模板，IDE OK 但 fat jar 启动报 `FileNotFoundException`
+   → **v2.0 根治：** 改用 `setClassForTemplateLoading` 走类加载器读模板，fat jar 可直接启动，不再需要 exploded 目录绕过
 5. xxl-job 执行器组需手动创建，且 admin 跑 docker 容器内，自动注册的宿主机 IP 不可达 → 改 `addressType=1` 手动录入 `host.docker.internal:8999`
 6. **Feign + Hystrix 默认 1s 超时**，文件上传操作实际已成功但返回 null 被误判为失败
+   → **v2.0 根治：** `feign-dev.yaml` 配齐三层超时（Hystrix 30s ≥ Ribbon 3s+25s ≥ Feign），外层不再先于内层熔断
 7. **`course_template.ftl:183`** 用 `${secondNode.teachplanMedia.teachplanId!''}` 处理空值，但 `teachplanMedia` 本身为 null 时 `!''` 防不住 → 加括号 `${(...)!''}`
 
 ### 业务/数据
@@ -157,8 +158,10 @@ cd .. && bash start-services.sh
 11. **portal 容器 Vue dist** 用 `.env.prod` 打包，硬编码 `http://xc-main-java.itheima.net:7291/api`（黑马演示服务器，已下线）→ sed 批量替换 + 把 dist 拷出宿主机做 volume 挂载持久化
 
 ### 检索
-12. **ES `course-publish` 索引** `mtName/stName` 字段是 `text` 类型，搜索代码做 aggregation 时报 `illegal_argument_exception` → PUT mapping 加 `fielddata: true`
-13. content-service 发布课程时不会自动同步到 ES（saveCourseIndex 在 xxl-job 任务链中，但 Hystrix 短超时同样易误判）
+12. **ES `course-publish` 索引** `mtName/stName` 字段是 `text` 类型，搜索代码做 aggregation 时报 `illegal_argument_exception`
+    → **v2.0 根治：** 新增 `CourseIndexInitializer`，search 启动时自动按正确 mapping 建索引（`mtName/stName` 用 keyword 主字段 + keyword 子字段，同时满足 terms 聚合与 `.keyword` 精确过滤），不再依赖手工 PUT mapping
+13. content-service 发布课程时不会自动同步到 ES（saveCourseIndex 在 xxl-job 任务链第二阶段，被第一阶段静态化失败连坐）
+    → **v2.0 根治：** 第 4、6 两项修复后，xxl-job 三阶段任务链（静态化 → ES 索引 → Redis 缓存）可完整走通
 
 ---
 
@@ -191,10 +194,17 @@ publish() → 写 mq_message → xxl-job 扫表 → CoursePublishTask
 
 ---
 
+## v2 演进路线
+
+- [x] **v2.0 缺陷根治（2026-06）**：FreeMarker fat-jar 加载、Feign 三层超时、ES 索引自动初始化、支付回调地址配置化、清理死代码与演示脚手架
+- [ ] **v2.0-5**：课程发布第三阶段 Redis 缓存预热（现仅有注释占位，未实现）
+- [ ] **v2.1 工程质量**：全局异常 + JSR303 参数校验补全、`@Idempotent` 幂等注解组件（Redis setnx）、MDC traceId 跨服务日志串联
+- [ ] **v2.2 组件升级**：Hystrix → Sentinel 熔断迁移（Hystrix 已停止维护）
+- [ ] **v2.3 新功能**：限时秒杀课（Redis Lua 原子扣减 + MQ 异步落库）
+
 ## 待完善
 
 - [ ] 支付宝沙箱真实对接（当前用 SQL+MQ 模拟回调）
-- [ ] 课程发布失败的 ES 索引补偿任务
 - [ ] 直播课（teachmode=200003）业务实现
 - [ ] 笔记 / 评论 / 资料下载后端接口
 - [ ] 课程审核员角色 r_002 完整流程
