@@ -84,6 +84,11 @@
            <groupId>org.springframework.cloud</groupId>
            <artifactId>spring-cloud-starter-openfeign</artifactId>
        </dependency>
+       <!-- Sentinel 熔断降级（替代已停维的 Hystrix；fallbackFactory 接口由 feign-hystrix 提供保持兼容） -->
+       <dependency>
+           <groupId>com.alibaba.cloud</groupId>
+           <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
+       </dependency>
        <dependency>
            <groupId>io.github.openfeign</groupId>
            <artifactId>feign-httpclient</artifactId>

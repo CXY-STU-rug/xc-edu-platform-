@@ -6,23 +6,15 @@ feign:
         connectTimeout: 3000 # feign建立连接超时（与Ribbon对齐）
         readTimeout: 25000 # feign读响应超时（上传静态页等耗时操作需要秒级窗口）
   hystrix:
-    enabled: true
-  circuitbreaker:
-    enabled: true
+    enabled: false # v2.2 已迁移 Sentinel，Hystrix 停用（jar 仅保留 FallbackFactory 接口兼容）
+  sentinel:
+    enabled: true # Feign 调用异常时走 fallbackFactory 降级；信号量隔离不切线程，traceId 不断链
   httpclient:
     enabled: true # 开启feign对HttpClient的支持
     max-connections: 200 # 最大的连接数
     max-connections-per-route: 50 # 每个路径的最大连接数
 
-# 三层超时必须满足：Hystrix >= Ribbon(连接+读) >= Feign，否则外层先熔断造成"假失败"
-hystrix:
-  command:
-    default:
-      execution:
-        isolation:
-          thread:
-            timeoutInMilliseconds: 30000 # Hystrix默认1000ms，必须放宽到大于Ribbon总耗时
-
+# Sentinel 模式下没有外层熔断计时器，超时完全由 Ribbon/Feign 两层控制（保持对齐）
 ribbon:
   ConnectTimeout: 3000 # 建立连接超时
   ReadTimeout: 25000 # 读响应超时
