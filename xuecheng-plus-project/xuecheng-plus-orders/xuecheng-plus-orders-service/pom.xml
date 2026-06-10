@@ -96,9 +96,10 @@
             <artifactId>xxl-job-core</artifactId>
         </dependency>
 
+        <!-- Redis：秒杀 Lua 原子扣库存 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
     </dependencies>
 
