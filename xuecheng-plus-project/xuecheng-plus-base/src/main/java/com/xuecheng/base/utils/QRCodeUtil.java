@@ -76,6 +76,7 @@ public class QRCodeUtil {
 
  public static void main(String[] args) throws IOException {
   QRCodeUtil qrCodeUtil = new QRCodeUtil();
-  System.out.println(qrCodeUtil.createQRCode("http://192.168.101.1:63030/orders/alipaytest", 200, 200));
+  //本地验证二维码生成效果用，传入任意 URL 即可
+  System.out.println(qrCodeUtil.createQRCode("http://localhost:63010/orders/requestpay?payNo=test", 200, 200));
  }
 }

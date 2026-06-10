@@ -54,6 +54,9 @@ public class OrderController {
     @Value("${pay.alipay.ALIPAY_PUBLIC_KEY}")
     String ALIPAY_PUBLIC_KEY;
 
+    @Value("${pay.alipay.NOTIFY_URL}")
+    String NOTIFY_URL; // 支付宝异步通知回调地址，从配置中心读取，避免硬编码环境地址
+
     @ApiOperation("生成支付二维码")
     @PostMapping("/generatepaycode")
     @ResponseBody
@@ -87,7 +90,7 @@ public class OrderController {
         AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.URL, APP_ID, APP_PRIVATE_KEY, AlipayConfig.FORMAT, AlipayConfig.CHARSET, ALIPAY_PUBLIC_KEY,AlipayConfig.SIGNTYPE);
         AlipayTradeWapPayRequest alipayRequest = new AlipayTradeWapPayRequest();//创建API对应的request
 //        alipayRequest.setReturnUrl("http://domain.com/CallBack/return_url.jsp");
-        alipayRequest.setNotifyUrl("http://tjxt-user-t.itheima.net/xuecheng/orders/paynotify");//在公共参数中设置回跳和通知地址
+        alipayRequest.setNotifyUrl(NOTIFY_URL);//异步通知地址改由配置中心管理，不同环境无需改代码
         alipayRequest.setBizContent("{" +
                 "    \"out_trade_no\":\""+payNo+"\"," +
                 "    \"total_amount\":"+payRecordByPayno.getTotalPrice()+"," +

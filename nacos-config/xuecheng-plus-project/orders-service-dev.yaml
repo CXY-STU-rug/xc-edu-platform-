@@ -24,3 +24,4 @@ pay:
     APP_ID: 2021000000000000
     APP_PRIVATE_KEY: dev_placeholder_app_private_key
     ALIPAY_PUBLIC_KEY: dev_placeholder_alipay_public_key
+    NOTIFY_URL: http://localhost:63010/orders/paynotify # 支付宝异步通知回调地址（生产环境需替换为公网可达地址）
