@@ -4,6 +4,16 @@ spring:
     url: jdbc:mysql://localhost:3306/xcplus_content?serverTimezone=UTC&userUnicode=true&useSSL=false&
     username: root
     password: 123456
+  redis: # 课程发布缓存（宿主机原生 Redis）
+    host: localhost
+    port: 6379
+    database: 0
+    lettuce:
+      pool:
+        max-active: 20 # 连接池最大连接数
+        max-idle: 10
+        min-idle: 2
+    timeout: 3000 # 连接超时 ms
 
 xxl:
   job:

@@ -36,8 +36,8 @@ public class CoursePublishController {
         //封装数据
         CoursePreviewDto coursePreviewDto = new CoursePreviewDto();
 
-        //查询课程发布表
-        CoursePublish coursePublish = coursePublishService.getCoursePublish(courseId);
+        //查询课程发布表（走 Redis 缓存，未命中自动回源）
+        CoursePublish coursePublish = coursePublishService.getCoursePublishCache(courseId);
         if(coursePublish == null){
             return coursePreviewDto;
         }
@@ -87,8 +87,8 @@ public class CoursePublishController {
     @ResponseBody
     @GetMapping("/r/coursepublish/{courseId}")
     public CoursePublish getCoursepublish(@PathVariable("courseId") Long courseId) {
-        //查询课程发布信息
-        CoursePublish coursePublish = coursePublishService.getCoursePublish(courseId);
+        //查询课程发布信息（走 Redis 缓存，供其他服务 Feign 调用，分摊高频读压力）
+        CoursePublish coursePublish = coursePublishService.getCoursePublishCache(courseId);
         return coursePublish;
     }
 

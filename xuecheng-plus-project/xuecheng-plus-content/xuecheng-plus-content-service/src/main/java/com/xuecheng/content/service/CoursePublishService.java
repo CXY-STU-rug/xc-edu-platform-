@@ -53,4 +53,18 @@ public interface CoursePublishService {
   * @return
   */
  public CoursePublish getCoursePublish(Long courseId);
+
+ /**
+  * 查询课程发布信息（走 Redis 缓存，未命中回源数据库并回填）
+  * 含空值缓存防穿透、互斥锁防击穿、过期时间打散防雪崩
+  * @param courseId 课程id
+  * @return 课程发布信息，课程不存在返回 null
+  */
+ public CoursePublish getCoursePublishCache(Long courseId);
+
+ /**
+  * 课程发布后预热 Redis 缓存（xxl-job 任务第三阶段调用）
+  * @param courseId 课程id
+  */
+ public void saveCourseCache(Long courseId);
 }

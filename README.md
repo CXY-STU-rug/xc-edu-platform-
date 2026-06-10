@@ -197,7 +197,7 @@ publish() → 写 mq_message → xxl-job 扫表 → CoursePublishTask
 ## v2 演进路线
 
 - [x] **v2.0 缺陷根治（2026-06）**：FreeMarker fat-jar 加载、Feign 三层超时、ES 索引自动初始化、支付回调地址配置化、清理死代码与演示脚手架
-- [ ] **v2.0-5**：课程发布第三阶段 Redis 缓存预热（现仅有注释占位，未实现）
+- [x] **v2.0-5 缓存预热（2026-06）**：content 接入 Redis，发布流水线第三阶段预热课程缓存（stageThree 幂等）；查询接口走缓存，含空值缓存防穿透、互斥锁防击穿、TTL 随机打散防雪崩
 - [ ] **v2.1 工程质量**：全局异常 + JSR303 参数校验补全、`@Idempotent` 幂等注解组件（Redis setnx）、MDC traceId 跨服务日志串联
 - [ ] **v2.2 组件升级**：Hystrix → Sentinel 熔断迁移（Hystrix 已停止维护）
 - [ ] **v2.3 新功能**：限时秒杀课（Redis Lua 原子扣减 + MQ 异步落库）

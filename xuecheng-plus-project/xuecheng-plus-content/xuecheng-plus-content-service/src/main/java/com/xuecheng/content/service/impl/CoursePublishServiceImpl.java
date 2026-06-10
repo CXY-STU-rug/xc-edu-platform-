@@ -28,6 +28,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
@@ -39,6 +40,8 @@ import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @version 1.0
@@ -69,6 +72,8 @@ public class CoursePublishServiceImpl implements CoursePublishService {
     MqMessageService mqMessageService;
      @Autowired
      MediaServiceClient mediaServiceClient;
+    @Autowired
+    StringRedisTemplate redisTemplate; //用 String 模板 + fastjson 手动序列化，避免默认 JDK 序列化的可读性问题
 
 
 
@@ -262,6 +267,59 @@ public class CoursePublishServiceImpl implements CoursePublishService {
     public CoursePublish getCoursePublish(Long courseId){
         CoursePublish coursePublish = coursePublishMapper.selectById(courseId);
         return coursePublish ;
+    }
+
+    //缓存 key 前缀，与预热端保持一致
+    private static final String COURSE_CACHE_KEY = "course:publish:";
+    //空值标记：课程不存在时也要缓存，防止缓存穿透（恶意请求不存在的 id 全部打到数据库）
+    private static final String NULL_MARK = "null";
+
+    @Override
+    public CoursePublish getCoursePublishCache(Long courseId) {
+        String key = COURSE_CACHE_KEY + courseId;
+        //1. 先查缓存
+        String jsonString = redisTemplate.opsForValue().get(key);
+        if (jsonString != null) {
+            //命中空值标记：说明此前已确认课程不存在，直接返回 null，不打数据库
+            if (NULL_MARK.equals(jsonString)) {
+                return null;
+            }
+            //命中正常数据：反序列化返回
+            return JSON.parseObject(jsonString, CoursePublish.class);
+        }
+        //2. 未命中：加互斥锁防击穿（热点 key 过期瞬间大量请求同时回源数据库）
+        synchronized (this) {
+            //双重检查：拿到锁后再查一次缓存，可能前一个线程已经回填
+            jsonString = redisTemplate.opsForValue().get(key);
+            if (jsonString != null) {
+                return NULL_MARK.equals(jsonString) ? null : JSON.parseObject(jsonString, CoursePublish.class);
+            }
+            //3. 回源数据库
+            CoursePublish coursePublish = getCoursePublish(courseId);
+            if (coursePublish == null) {
+                //空值缓存 30 秒：防穿透，又不至于让新发布的课程长时间查不到
+                redisTemplate.opsForValue().set(key, NULL_MARK, 30, TimeUnit.SECONDS);
+                return null;
+            }
+            //4. 回填缓存：基础 300 秒 + 随机 0~300 秒，过期时间打散防雪崩（大量 key 同时失效）
+            int ttl = 300 + new Random().nextInt(300);
+            redisTemplate.opsForValue().set(key, JSON.toJSONString(coursePublish), ttl, TimeUnit.SECONDS);
+            return coursePublish;
+        }
+    }
+
+    @Override
+    public void saveCourseCache(Long courseId) {
+        //课程发布后的预热：直接查库写缓存，覆盖可能存在的空值标记
+        CoursePublish coursePublish = getCoursePublish(courseId);
+        if (coursePublish == null) {
+            XueChengPlusException.cast("课程发布信息不存在，无法预热缓存");
+        }
+        String key = COURSE_CACHE_KEY + courseId;
+        //预热 TTL 给 1 天 + 随机 0~6 小时：发布后的课程是热点，存活期长一些；随机量防止同批发布的课程同时失效
+        long ttl = 86400 + new Random().nextInt(21600);
+        redisTemplate.opsForValue().set(key, JSON.toJSONString(coursePublish), ttl, TimeUnit.SECONDS);
+        log.info("课程缓存预热完成, courseId: {}, ttl: {}s", courseId, ttl);
     }
 
 }

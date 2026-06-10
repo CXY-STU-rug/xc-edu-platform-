@@ -62,10 +62,27 @@ public class CoursePublishTask extends MessageProcessAbstract {
         //向elasticsearch写索引数据
         saveCourseIndex(mqMessage,courseId);
 
-        //向redis写缓存
+        //向redis写缓存（第三阶段：预热课程详情缓存）
+        saveCourseCache(mqMessage,courseId);
 
         //返回true表示任务完成
         return true;
+    }
+
+    //预热课程缓存 第三个阶段任务
+    private void saveCourseCache(MqMessage mqMessage,long courseId){
+        Long taskId = mqMessage.getId();
+        MqMessageService mqMessageService = this.getMqMessageService();
+        //幂等性处理：查询第三阶段状态，已完成则跳过
+        int stageThree = mqMessageService.getStageThree(taskId);
+        if(stageThree>0){
+            log.debug("课程缓存已预热，无需执行...");
+            return;
+        }
+        //查库写入 Redis（带随机过期时间，防同批课程缓存同时失效）
+        coursePublishService.saveCourseCache(courseId);
+        //标记本阶段完成
+        mqMessageService.completedStageThree(taskId);
     }
     //生成课程静态化页面并上传至文件系统
     private void generateCourseHtml(MqMessage mqMessage,long courseId){
