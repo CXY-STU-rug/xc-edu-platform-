@@ -44,10 +44,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description TODO
- * @date 2022/9/10 8:58
  */
 @Slf4j
 @Service
@@ -203,8 +201,6 @@ public class MediaFileServiceImpl implements MediaFileService {
      * @param bucket  桶
      * @param objectName 对象名称
      * @return com.xuecheng.media.model.po.MediaFiles
-     * @author Mr.M
-     * @date 2022/10/12 21:22
      */
     @Transactional
     public MediaFiles addMediaFilesToDb(Long companyId,String fileMd5,UploadFileParamsDto uploadFileParamsDto,String bucket,String objectName){

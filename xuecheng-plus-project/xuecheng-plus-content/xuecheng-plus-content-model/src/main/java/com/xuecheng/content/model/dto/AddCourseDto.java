@@ -11,8 +11,6 @@ import java.math.BigDecimal;
 
 /**
  * @description 添加课程dto
- * @author Mr.M
- * @date 2022/9/7 17:40
  * @version 1.0
  */
 @Data

@@ -3,10 +3,8 @@ package com.xuecheng.content.model.dto;
 import lombok.Data;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description 新增大章节、小章节、修改章节信息
- * @date 2023/2/14 14:54
  */
 @Data
 public class SaveTeachplanDto {

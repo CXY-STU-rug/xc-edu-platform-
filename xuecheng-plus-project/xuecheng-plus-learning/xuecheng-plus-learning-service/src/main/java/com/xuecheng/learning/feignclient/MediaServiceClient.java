@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @description TODO
- * @author Mr.M
- * @date 2022/10/27 9:04
  * @version 1.0
  */
  @FeignClient(value = "media-api",fallbackFactory = MediaServiceClientFallbackFactory.class)

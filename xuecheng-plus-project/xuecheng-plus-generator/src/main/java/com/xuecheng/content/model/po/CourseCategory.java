@@ -9,7 +9,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
  * 课程分类
  * </p>
  *
- * @author itcast
  */
 @Data
 @TableName("course_category")

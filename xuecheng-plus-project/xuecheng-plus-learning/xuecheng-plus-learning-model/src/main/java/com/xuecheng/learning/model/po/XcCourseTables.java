@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
  * 
  * </p>
  *
- * @author itcast
  */
 @Data
 @TableName("xc_course_tables")

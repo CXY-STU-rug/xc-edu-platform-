@@ -8,10 +8,8 @@ import lombok.ToString;
 import java.util.List;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description 课程计划信息模型类
- * @date 2023/2/14 11:23
  */
 @Data
 @ToString

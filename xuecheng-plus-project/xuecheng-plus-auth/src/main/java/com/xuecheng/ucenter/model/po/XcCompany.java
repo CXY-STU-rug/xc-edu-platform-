@@ -10,7 +10,6 @@ import java.io.Serializable;
  * 
  * </p>
  *
- * @author itcast
  */
 @Data
 @TableName("xc_company")

@@ -44,10 +44,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description 订单相关的接口
- * @date 2023/2/26 10:12
  */
 @Slf4j
 @Service
@@ -182,8 +180,6 @@ public class OrderServiceImpl implements OrderService {
      * @description 保存支付宝支付结果
      * @param payStatusDto  支付结果信息 从支付宝查询到的信息
      * @return void
-     * @author Mr.M
-     * @date 2022/10/4 16:52
      */
     @Transactional
     public void saveAliPayStatus(PayStatusDto payStatusDto){

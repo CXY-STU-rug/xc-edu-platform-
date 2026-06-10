@@ -12,10 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description 接收消息通知处理类
- * @date 2023/2/26 16:42
  */
 @Slf4j
 @Service

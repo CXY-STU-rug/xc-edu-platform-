@@ -9,7 +9,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
  * 课程营销信息
  * </p>
  *
- * @author itcast
  */
 @Data
 @TableName("course_market")

@@ -22,10 +22,8 @@ import java.io.FileInputStream;
 import java.io.OutputStream;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description TODO
- * @date 2022/10/15 22:13
  */
 @Configuration
 public class MultipartSupportConfig {

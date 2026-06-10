@@ -5,10 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description 绑定媒资和课程计划的模型类
- * @date 2023/2/19 15:37
  */
 
 @Data

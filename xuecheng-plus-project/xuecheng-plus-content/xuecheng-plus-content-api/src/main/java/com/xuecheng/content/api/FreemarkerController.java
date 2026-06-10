@@ -5,10 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description Freemarker入门程序
- * @date 2023/2/19 16:12
  */
 @Controller
 public class FreemarkerController {

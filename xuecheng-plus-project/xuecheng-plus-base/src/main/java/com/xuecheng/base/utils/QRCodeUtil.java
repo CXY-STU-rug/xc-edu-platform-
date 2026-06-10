@@ -17,8 +17,6 @@ import java.util.HashMap;
 
 /**
  * @description 二维码生成工具
- * @author Mr.M
- * @date 2022/10/3 0:03
  * @version 1.0
  */
 public class QRCodeUtil {

@@ -5,10 +5,8 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description 课程预览模型类
- * @date 2023/2/21 10:00
  */
 @Data
 public class CoursePreviewDto {

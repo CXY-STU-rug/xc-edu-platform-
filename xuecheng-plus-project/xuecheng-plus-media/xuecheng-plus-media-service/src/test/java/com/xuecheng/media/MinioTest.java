@@ -18,10 +18,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description 测试minio的sdk
- * @date 2023/2/17 11:55
  */
 public class MinioTest {
 

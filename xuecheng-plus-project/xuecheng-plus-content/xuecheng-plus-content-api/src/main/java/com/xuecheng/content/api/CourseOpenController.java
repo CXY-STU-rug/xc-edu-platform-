@@ -10,10 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description TODO
- * @date 2023/2/21 10:33
  */
 @RestController
 @RequestMapping("/open")

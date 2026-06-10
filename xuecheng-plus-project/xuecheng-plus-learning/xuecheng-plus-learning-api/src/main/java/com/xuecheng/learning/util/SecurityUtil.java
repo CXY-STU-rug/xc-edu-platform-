@@ -9,10 +9,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description 用户身份信息获取工具类
- * @date 2022/10/20 11:41
  */
 @Slf4j
 public class SecurityUtil {

@@ -24,10 +24,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description 选课相关接口实现
- * @date 2023/2/25 12:02
  */
 @Slf4j
 @Service
@@ -234,8 +232,6 @@ public class MyCourseTablesServiceImpl implements MyCourseTablesService {
      * @param userId
      * @param courseId
      * @return com.xuecheng.learning.model.po.XcCourseTables
-     * @author Mr.M
-     * @date 2022/10/2 17:07
      */
     public XcCourseTables getXcCourseTables(String userId,Long courseId){
         XcCourseTables xcCourseTables = courseTablesMapper.selectOne(new LambdaQueryWrapper<XcCourseTables>().eq(XcCourseTables::getUserId, userId).eq(XcCourseTables::getCourseId, courseId));

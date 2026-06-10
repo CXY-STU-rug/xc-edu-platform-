@@ -10,10 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.io.IOException;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description TODO
- * @date 2023/2/24 15:13
  */
 @Slf4j
 @Controller

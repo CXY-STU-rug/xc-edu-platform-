@@ -5,10 +5,8 @@ import com.xuecheng.media.model.po.MediaProcess;
 import java.util.List;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description 任务处理
- * @date 2023/2/19 10:43
  */
 public interface MediaFileProcessService {
 
@@ -18,8 +16,6 @@ public interface MediaFileProcessService {
      * @param shardTotal 分片总数
      * @param count 获取记录数
      * @return java.util.List<com.xuecheng.media.model.po.MediaProcess>
-     * @author Mr.M
-     * @date 2022/9/14 14:49
      */
     public List<MediaProcess> getMediaProcessList(int shardIndex, int shardTotal, int count);
 
@@ -39,8 +35,6 @@ public interface MediaFileProcessService {
      * @param url url
      * @param errorMsg 错误信息
      * @return void
-     * @author Mr.M
-     * @date 2022/10/15 11:29
      */
     void saveProcessFinishStatus(Long taskId,String status,String fileId,String url,String errorMsg);
 

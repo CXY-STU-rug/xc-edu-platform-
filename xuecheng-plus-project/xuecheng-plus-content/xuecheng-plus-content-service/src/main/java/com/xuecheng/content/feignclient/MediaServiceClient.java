@@ -11,10 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description 远程调用媒资服务的接口
- * @date 2023/2/22 10:26
  */
 //使用fallback定义降级类是无法拿到熔断异常,使用FallbackFactory可以拿到熔断的异常信息
 @FeignClient(value = "media-api",configuration = {MultipartSupportConfig.class},fallbackFactory = MediaServiceClientFallbackFactory.class)

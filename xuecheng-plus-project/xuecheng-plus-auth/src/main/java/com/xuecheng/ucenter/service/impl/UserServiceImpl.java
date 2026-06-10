@@ -22,10 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description TODO
- * @date 2023/2/24 10:37
  */
 @Slf4j
 @Component
@@ -71,8 +69,6 @@ public class UserServiceImpl implements UserDetailsService {
      * @description 查询用户信息
      * @param xcUser  用户id，主键
      * @return com.xuecheng.ucenter.model.po.XcUser 用户信息
-     * @author Mr.M
-     * @date 2022/9/29 12:19
      */
     public UserDetails getUserPrincipal(XcUserExt xcUser){
         String password = xcUser.getPassword();

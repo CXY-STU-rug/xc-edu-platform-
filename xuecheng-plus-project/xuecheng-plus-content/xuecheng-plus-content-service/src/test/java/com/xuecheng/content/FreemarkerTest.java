@@ -21,10 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description 测试freemarker页面静态化方法
- * @date 2023/2/12 9:24
  */
 @SpringBootTest
 public class FreemarkerTest {

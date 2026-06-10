@@ -11,10 +11,8 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description 测试远程调用媒资服务
- * @date 2023/2/22 10:30
  */
 @SpringBootTest
 public class FeignUploadTest {

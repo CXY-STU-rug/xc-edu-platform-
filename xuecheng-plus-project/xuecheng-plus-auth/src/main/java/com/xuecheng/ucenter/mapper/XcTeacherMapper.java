@@ -8,7 +8,6 @@ import com.xuecheng.ucenter.model.po.XcTeacher;
  *  Mapper 接口
  * </p>
  *
- * @author itcast
  */
 public interface XcTeacherMapper extends BaseMapper<XcTeacher> {
 

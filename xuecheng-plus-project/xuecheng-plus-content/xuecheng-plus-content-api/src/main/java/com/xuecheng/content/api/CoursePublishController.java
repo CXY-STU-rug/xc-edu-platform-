@@ -19,10 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description 课程发布相关接口
- * @date 2023/2/21 9:28
  */
 @Controller
 public class CoursePublishController {

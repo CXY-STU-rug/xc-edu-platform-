@@ -14,10 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description 上传视频
- * @date 2023/2/18 10:34
  */
 
 @Api(value = "大文件上传接口", tags = "大文件上传接口")

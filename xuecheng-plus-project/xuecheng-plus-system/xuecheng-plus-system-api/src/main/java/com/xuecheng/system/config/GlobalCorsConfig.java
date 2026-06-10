@@ -7,10 +7,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description TODO
- * @date 2023/2/12 11:27
  */
 @Configuration
 public class GlobalCorsConfig {

@@ -3,10 +3,8 @@ package com.xuecheng.learning.service;
 import com.xuecheng.base.model.RestResponse;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description 在线学习相关的接口
- * @date 2023/2/28 10:17
  */
 public interface LearningService {
 
@@ -16,8 +14,6 @@ public interface LearningService {
      * @param teachplanId 课程计划id
      * @param mediaId 视频文件id
      * @return com.xuecheng.base.model.RestResponse<java.lang.String>
-     * @author Mr.M
-     * @date 2022/10/5 9:08
      */
     public RestResponse<String> getVideo(String userId, Long courseId, Long teachplanId, String mediaId);
 

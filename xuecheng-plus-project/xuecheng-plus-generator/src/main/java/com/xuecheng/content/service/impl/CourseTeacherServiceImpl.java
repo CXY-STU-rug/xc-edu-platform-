@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
  * 课程-教师关系表 服务实现类
  * </p>
  *
- * @author itcast
  */
 @Slf4j
 @Service

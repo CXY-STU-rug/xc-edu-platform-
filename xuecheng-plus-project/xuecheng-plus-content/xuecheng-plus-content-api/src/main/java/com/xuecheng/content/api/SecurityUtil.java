@@ -9,10 +9,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description TODO
- * @date 2023/2/24 11:26
  */
 @Slf4j
 public class SecurityUtil {

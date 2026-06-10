@@ -16,10 +16,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description MediaFileProcess接口实现
- * @date 2023/2/19 10:44
  */
 @Slf4j
 @Service

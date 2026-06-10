@@ -13,10 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description TODO
- * @date 2023/2/21 10:35
  */
 @Api(value = "媒资文件管理接口", tags = "媒资文件管理接口")
 @RestController

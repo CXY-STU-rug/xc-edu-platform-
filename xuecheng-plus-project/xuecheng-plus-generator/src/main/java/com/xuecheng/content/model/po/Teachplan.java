@@ -14,7 +14,6 @@ import com.baomidou.mybatisplus.annotation.TableName;
  * 课程计划
  * </p>
  *
- * @author itcast
  */
 @Data
 @TableName("teachplan")

@@ -15,10 +15,8 @@ import javax.annotation.Resource;
 import java.util.Map;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description 验证码服务接口
- * @date 2022/9/29 18:39
  */
 @Api(value = "验证码服务接口")
 @RestController

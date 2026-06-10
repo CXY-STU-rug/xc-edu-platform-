@@ -25,10 +25,8 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description 微信扫码认证
- * @date 2023/2/24 11:57
  */
 @Service("wx_authservice")
 public class WxAuthServiceImpl implements AuthService, WxAuthService {

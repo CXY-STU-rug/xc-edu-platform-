@@ -41,10 +41,8 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description 课程发布相关接口实现
- * @date 2023/2/21 10:04
  */
 @Slf4j
 @Service
@@ -247,8 +245,6 @@ public class CoursePublishServiceImpl implements CoursePublishService {
      * @description 保存消息表记录
      * @param courseId  课程id
      * @return void
-     * @author Mr.M
-     * @date 2022/9/20 16:32
      */
     private void saveCoursePublishMessage(Long courseId) {
         MqMessage mqMessage = mqMessageService.addMessage("course_publish", String.valueOf(courseId), null, null);

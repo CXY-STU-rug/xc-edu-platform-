@@ -13,7 +13,6 @@ import java.io.Serializable;
  * 
  * </p>
  *
- * @author itcast
  */
 @Data
 @ToString

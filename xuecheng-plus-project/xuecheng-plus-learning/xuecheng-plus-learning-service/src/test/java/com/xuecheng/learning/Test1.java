@@ -7,8 +7,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 /**
  * @description TODO
- * @author Mr.M
- * @date 2022/10/2 10:32
  * @version 1.0
  */
  @SpringBootTest

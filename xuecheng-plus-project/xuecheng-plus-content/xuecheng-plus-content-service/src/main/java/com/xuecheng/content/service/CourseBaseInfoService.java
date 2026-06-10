@@ -9,10 +9,8 @@ import com.xuecheng.content.model.dto.QueryCourseParamsDto;
 import com.xuecheng.content.model.po.CourseBase;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description 课程信息管理接口
- * @date 2023/2/12 10:14
  */
 public interface CourseBaseInfoService {
 

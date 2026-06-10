@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
  * 
  * </p>
  *
- * @author itcast
  */
 @Data
 @TableName("mq_message_history")

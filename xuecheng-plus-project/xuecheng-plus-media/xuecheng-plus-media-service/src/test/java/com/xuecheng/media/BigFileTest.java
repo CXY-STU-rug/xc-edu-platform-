@@ -11,10 +11,8 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description 测试大文件上传方法
- * @date 2023/2/18 9:24
  */
 public class BigFileTest {
 

@@ -8,7 +8,6 @@ import com.xuecheng.ucenter.model.po.XcUserRole;
  *  Mapper 接口
  * </p>
  *
- * @author itcast
  */
 public interface XcUserRoleMapper extends BaseMapper<XcUserRole> {
 

@@ -20,10 +20,8 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description 课程发布的任务类
- * @date 2023/2/21 16:15
  */
 @Slf4j
 @Component

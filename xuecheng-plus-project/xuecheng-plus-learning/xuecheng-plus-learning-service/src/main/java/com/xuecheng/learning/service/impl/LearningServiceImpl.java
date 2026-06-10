@@ -13,10 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description 在线学习接口
- * @date 2023/2/28 10:20
  */
 @Slf4j
 @Service

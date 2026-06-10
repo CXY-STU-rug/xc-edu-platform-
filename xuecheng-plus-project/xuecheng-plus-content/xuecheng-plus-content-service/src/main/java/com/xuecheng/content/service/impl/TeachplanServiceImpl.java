@@ -18,10 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * @author Mr.M
  * @version 1.0
  * @description TODO
- * @date 2023/2/14 12:11
  */
 @Service
 public class TeachplanServiceImpl implements TeachplanService {
