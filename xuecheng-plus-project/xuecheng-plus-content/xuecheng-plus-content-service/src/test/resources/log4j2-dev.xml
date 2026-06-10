@@ -2,7 +2,7 @@
 <Configuration monitorInterval="180" packages="">
     <properties>
         <property name="logdir">logs</property>
-        <property name="PATTERN">%date{YYYY-MM-dd HH:mm:ss,SSS} %level [%thread][%file:%line] - %msg%n%throwable</property>
+        <property name="PATTERN">%date{YYYY-MM-dd HH:mm:ss,SSS} %level [%X{traceId}][%thread][%file:%line] - %msg%n%throwable</property>
     </properties>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">

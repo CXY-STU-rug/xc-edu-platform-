@@ -200,7 +200,7 @@ publish() → 写 mq_message → xxl-job 扫表 → CoursePublishTask
 - [x] **v2.0-5 缓存预热（2026-06）**：content 接入 Redis，发布流水线第三阶段预热课程缓存（stageThree 幂等）；查询接口走缓存，含空值缓存防穿透、互斥锁防击穿、TTL 随机打散防雪崩
 - [x] **v2.1-1 异常与校验（2026-06）**：修复全局异常处理器 NPE 隐患（null message 反杀处理器本身）；参数校验失败改返回 400；订单创建 DTO 补全 JSR303 校验
 - [x] **v2.1-2 幂等组件（2026-06）**：base 模块实现 `@Idempotent` 注解（AOP + Redis SETNX 原子抢占 + SpEL 业务键 + 失败释放重试），条件装配不绑架无 Redis 服务；首个落点为下单接口防重复提交
-- [ ] **v2.1-3**：MDC traceId 跨服务日志串联
+- [x] **v2.1-3 全链路 traceId（2026-06）**：网关 GlobalFilter 生成 traceId → X-Trace-Id 头透传 → 各服务 TraceFilter 写 MDC → Feign 拦截器续传下游，log4j2 输出 `[%X{traceId}]`，9 服务日志一键串联；响应头回写 traceId 便于前端报障定位（已知局限：Hystrix 线程池隔离会断链，v2.2 迁 Sentinel 后消除）
 - [ ] **v2.2 组件升级**：Hystrix → Sentinel 熔断迁移（Hystrix 已停止维护）
 - [ ] **v2.3 新功能**：限时秒杀课（Redis Lua 原子扣减 + MQ 异步落库）
 
