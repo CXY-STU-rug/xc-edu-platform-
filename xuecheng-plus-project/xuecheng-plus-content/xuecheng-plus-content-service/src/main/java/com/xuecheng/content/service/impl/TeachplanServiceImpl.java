@@ -71,6 +71,70 @@ public class TeachplanServiceImpl implements TeachplanService {
 
     @Transactional
     @Override
+    public void deleteTeachplan(Long teachplanId) {
+        if (teachplanId == null) {
+            XueChengPlusException.cast("课程计划id为空");
+        }
+        Teachplan teachplan = teachplanMapper.selectById(teachplanId);
+        if (teachplan == null) {
+            XueChengPlusException.cast("课程计划不存在");
+        }
+        Integer grade = teachplan.getGrade();
+        if (grade != null && grade == 1) {
+            Integer subCount = teachplanMapper.selectCount(
+                    new LambdaQueryWrapper<Teachplan>().eq(Teachplan::getParentid, teachplanId));
+            if (subCount > 0) {
+                XueChengPlusException.cast("课程计划信息还有子级信息，无法操作");
+            }
+            teachplanMapper.deleteById(teachplanId);
+        } else {
+            teachplanMapper.deleteById(teachplanId);
+            teachplanMediaMapper.delete(
+                    new LambdaQueryWrapper<TeachplanMedia>().eq(TeachplanMedia::getTeachplanId, teachplanId));
+        }
+    }
+
+    @Transactional
+    @Override
+    public void moveup(Long teachplanId) {
+        swapOrder(teachplanId, true);
+    }
+
+    @Transactional
+    @Override
+    public void movedown(Long teachplanId) {
+        swapOrder(teachplanId, false);
+    }
+
+    private void swapOrder(Long teachplanId, boolean up) {
+        Teachplan current = teachplanMapper.selectById(teachplanId);
+        if (current == null) {
+            XueChengPlusException.cast("课程计划不存在");
+        }
+        LambdaQueryWrapper<Teachplan> wrapper = new LambdaQueryWrapper<Teachplan>()
+                .eq(Teachplan::getCourseId, current.getCourseId())
+                .eq(Teachplan::getParentid, current.getParentid());
+        if (up) {
+            wrapper.lt(Teachplan::getOrderby, current.getOrderby())
+                    .orderByDesc(Teachplan::getOrderby);
+        } else {
+            wrapper.gt(Teachplan::getOrderby, current.getOrderby())
+                    .orderByAsc(Teachplan::getOrderby);
+        }
+        wrapper.last("limit 1");
+        Teachplan neighbor = teachplanMapper.selectOne(wrapper);
+        if (neighbor == null) {
+            XueChengPlusException.cast(up ? "已经是第一个，无法上移" : "已经是最后一个，无法下移");
+        }
+        Integer tmp = current.getOrderby();
+        current.setOrderby(neighbor.getOrderby());
+        neighbor.setOrderby(tmp);
+        teachplanMapper.updateById(current);
+        teachplanMapper.updateById(neighbor);
+    }
+
+    @Transactional
+    @Override
     public void associationMedia(BindTeachplanMediaDto bindTeachplanMediaDto) {
         //课程计划id
         Long teachplanId = bindTeachplanMediaDto.getTeachplanId();

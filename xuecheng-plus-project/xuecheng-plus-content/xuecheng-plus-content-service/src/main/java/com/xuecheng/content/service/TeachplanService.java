@@ -35,4 +35,10 @@ public interface TeachplanService {
   * @date 2022/9/14 22:20
   */
  public void associationMedia(BindTeachplanMediaDto bindTeachplanMediaDto);
+
+ public void deleteTeachplan(Long teachplanId);
+
+ public void moveup(Long teachplanId);
+
+ public void movedown(Long teachplanId);
 }

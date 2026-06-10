@@ -79,10 +79,10 @@ public class CourseSearchServiceImpl implements CourseSearchService {
         }
         //过虑
         if(StringUtils.isNotEmpty(courseSearchParam.getMt())){
-            boolQueryBuilder.filter(QueryBuilders.termQuery("mtName",courseSearchParam.getMt()));
+            boolQueryBuilder.filter(QueryBuilders.termQuery("mtName.keyword",courseSearchParam.getMt()));
         }
         if(StringUtils.isNotEmpty(courseSearchParam.getSt())){
-            boolQueryBuilder.filter(QueryBuilders.termQuery("stName",courseSearchParam.getSt()));
+            boolQueryBuilder.filter(QueryBuilders.termQuery("stName.keyword",courseSearchParam.getSt()));
         }
         if(StringUtils.isNotEmpty(courseSearchParam.getGrade())){
             boolQueryBuilder.filter(QueryBuilders.termQuery("grade",courseSearchParam.getGrade()));

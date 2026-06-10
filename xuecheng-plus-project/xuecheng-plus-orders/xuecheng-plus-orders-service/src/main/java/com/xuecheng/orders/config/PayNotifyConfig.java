@@ -19,6 +19,10 @@ import org.springframework.context.annotation.Configuration;
  * @description TODO
  * @date 2023/2/23 16:59
  */
+
+
+/**
+下单之后通过ribbit发送数据到redis，es,deng*/
 @Slf4j
 @Configuration
 public class PayNotifyConfig implements ApplicationContextAware {

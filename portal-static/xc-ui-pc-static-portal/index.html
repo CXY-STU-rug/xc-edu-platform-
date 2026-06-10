@@ -721,4 +721,39 @@
         })
     </script>
     <script src="js/page-learing-index.js"></script>
+    <script>
+    (function(){
+        var FILE_HOST = 'http://file.51xuecheng.cn';
+        var GRADE = {'204001':'初级','204002':'中级','204003':'高级'};
+        function pic(c){ return c.pic ? (FILE_HOST + c.pic) : 'img/widget-demo1.png'; }
+        function fmtItem(c){
+            return '<div class="recom-item"><a href="/course/' + c.id + '.html" target="_blank">'
+                 + '<p><img src="' + pic(c) + '" width="100%" alt=""></p>'
+                 + '<ul><li>' + c.name + '</li>'
+                 + '<li><span>' + (GRADE[c.grade] || '') + '</span> <em> · </em> 学习中</li>'
+                 + '</ul></a></div>';
+        }
+        function load(url, sel, prefix){
+            $.ajax({ url: url, type: 'GET', dataType: 'json' }).done(function(res){
+                if(res && res.items && res.items.length){
+                    $(sel).html((prefix||'') + res.items.map(fmtItem).join(''));
+                }
+            });
+        }
+        load('/api/search/course/list?pageNo=1&pageSize=5',
+             '.recommend-list .Recommend > .content', '');
+        load('/api/search/course/list?pageNo=1&pageSize=4&mt=' + encodeURIComponent('编程开发'),
+             '.recommend-list .course-box:eq(0) .cont-right',
+             '<div><img src="img/widget-ind-top.png" width="100%" alt=""></div>');
+        load('/api/search/course/list?pageNo=1&pageSize=4',
+             '.recommend-list .course-box:eq(1) .cont-right',
+             '<div><img src="img/widget-ind-top1.png" width="100%" alt=""></div>');
+        $('.recommend-list .queryall').attr('href','/course/search.html');
+        $('.recommend-list .course-nav span a').each(function(){
+            var t = $.trim($(this).text());
+            var grade = {'基础课程':'204001','就业课程':'204002','高级课程':'204003'}[t] || '';
+            $(this).attr('href','/course/search.html' + (grade ? '?grade='+grade : ''));
+        });
+    })();
+    </script>
 </body>
