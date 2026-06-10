@@ -43,7 +43,8 @@ public class GlobalExceptionHandler {
 
     //记录异常
     log.error("系统异常{}",e.getMessage(),e);
-    if(e.getMessage().equals("不允许访问")){
+    //常量放前面：NPE 等异常的 getMessage() 可能为 null，反过来写会让异常处理器自身抛 NPE
+    if("不允许访问".equals(e.getMessage())){
         return new RestErrorResponse("您没有权限操作此功能");
     }
 
@@ -56,7 +57,7 @@ public class GlobalExceptionHandler {
    //MethodArgumentNotValidException
     @ResponseBody
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseStatus(HttpStatus.BAD_REQUEST) //参数校验失败是客户端问题，HTTP 语义用 400 而非 500
     public RestErrorResponse methodArgumentNotValidException(MethodArgumentNotValidException e){
 
         BindingResult bindingResult = e.getBindingResult();

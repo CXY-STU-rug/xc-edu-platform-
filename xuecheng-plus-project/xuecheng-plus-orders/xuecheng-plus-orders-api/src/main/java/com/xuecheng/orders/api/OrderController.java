@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,7 +59,7 @@ public class OrderController {
     @ApiOperation("生成支付二维码")
     @PostMapping("/generatepaycode")
     @ResponseBody
-    public PayRecordDto generatePayCode(@RequestBody AddOrderDto addOrderDto) {
+    public PayRecordDto generatePayCode(@RequestBody @Validated AddOrderDto addOrderDto) { //@Validated 触发 JSR303 校验，失败由全局异常处理器统一返回 400
 
         SecurityUtil.XcUser user = SecurityUtil.getUser();
         String userId = user.getId();
