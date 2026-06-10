@@ -1,11 +1,4 @@
 
-/*创建订单*/
-const createOrder = courseId => {
-     let params = {
-         courseId:courseId
-     }
-    return requestPost('/api/order/create',params);
-}
 /*查询课程*/
 const queryCourse = courseId => {
 

@@ -3,6 +3,8 @@ feign:
     config:
       default: # default全局的配置
         loggerLevel: BASIC # 日志级别，BASIC就是基本的请求和响应信息
+        connectTimeout: 3000 # feign建立连接超时（与Ribbon对齐）
+        readTimeout: 25000 # feign读响应超时（上传静态页等耗时操作需要秒级窗口）
   hystrix:
     enabled: true
   circuitbreaker:
@@ -11,3 +13,18 @@ feign:
     enabled: true # 开启feign对HttpClient的支持
     max-connections: 200 # 最大的连接数
     max-connections-per-route: 50 # 每个路径的最大连接数
+
+# 三层超时必须满足：Hystrix >= Ribbon(连接+读) >= Feign，否则外层先熔断造成"假失败"
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000 # Hystrix默认1000ms，必须放宽到大于Ribbon总耗时
+
+ribbon:
+  ConnectTimeout: 3000 # 建立连接超时
+  ReadTimeout: 25000 # 读响应超时
+  MaxAutoRetries: 0 # 同实例不重试（上传类接口重试会放大副作用）
+  MaxAutoRetriesNextServer: 0 # 不换实例重试

@@ -195,10 +195,9 @@ public class CoursePublishServiceImpl implements CoursePublishService {
         //最终的静态文件
         File htmlFile = null;
         try {
-            //拿到classpath路径
-            String classpath = this.getClass().getResource("/").getPath();
-            //指定模板的目录
-            configuration.setDirectoryForTemplateLoading(new File(classpath+"/templates/"));
+            //通过类加载器加载模板目录：兼容 IDE 与 fat jar 两种运行方式
+            //（fat jar 下 getResource("/") 返回 jar 内部路径，new File() 无法访问，故不能用 setDirectoryForTemplateLoading）
+            configuration.setClassForTemplateLoading(this.getClass(), "/templates/");
             //指定编码
             configuration.setDefaultEncoding("utf-8");
 

@@ -354,25 +354,6 @@
                         }
                     })
 
-            },
-            createOrder(){
-                createOrder(this.courseId).then((res) => {
-                        this.editLoading = false;
-                        if(res.success){
-                            this.$message.success('订单创建成功');
-                            //跳转到支付页面
-                            window.location = "http://ucenter.xuecheng.com/#/pay/"+res.xcOrders.orderNumber
-                        }else{
-                            if(res.message){
-                                this.$message.error(res.message);
-                            }else{
-                                this.$message.error('订单创建失败，请刷新页面重试');
-                            }
-                        }
-                    },
-                    (res) => {
-                        this.editLoading = false;
-                    });
             }
 
         },

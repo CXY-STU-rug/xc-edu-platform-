@@ -1,7 +1,7 @@
 #!/bin/bash
 # Import all yaml configs into Nacos under matching groups
 NACOS=http://localhost:8848
-DIR="C:/Users/liyuq/OneDrive/桌面/xc/nacos-config"
+DIR="C:/Users/liyuq/OneDrive/桌面/学成在线Java后端项目/xc/nacos-config"
 ok=0; fail=0
 for group_dir in "$DIR"/*/; do
   group=$(basename "$group_dir")
