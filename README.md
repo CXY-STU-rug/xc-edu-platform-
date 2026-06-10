@@ -2,7 +2,7 @@
 
 基于 Spring Cloud Alibaba 的在线教育微服务实战项目，覆盖**课程管理、选课、支付、学习、媒资、搜索**全链路。
 
-> 本仓库基于黑马程序员同名项目重构、修复并完善了 13 处部署/运行时缺陷，已在 Windows 11 + Docker Desktop 本机端到端跑通。
+> 重构并修复 13 处部署/运行时缺陷，已在 Windows 11 + Docker Desktop 本机端到端跑通，并按 v2 路线持续演进。
 
 ---
 
@@ -155,7 +155,7 @@ cd .. && bash start-services.sh
 8. **`MyCourseTablesServiceImpl.addChargeCoruse`** 幂等只查 `status=701002`，忽略已购成功的 701001，会产生脏的重复待支付记录
 9. **`xc_orders.order_detail NOT NULL no default`** 但 `saveXcOrders` 不一定填充 → schema 加默认 `''` 绕过
 10. `AddOrderDto.orderDetail` 不允许 null，前端必须传 goods 列表 JSON 字符串
-11. **portal 容器 Vue dist** 用 `.env.prod` 打包，硬编码 `http://xc-main-java.itheima.net:7291/api`（黑马演示服务器，已下线）→ sed 批量替换 + 把 dist 拷出宿主机做 volume 挂载持久化
+11. **portal 容器 Vue dist** 用 `.env.prod` 打包，硬编码了已下线的远程演示服务器地址 → 早期用 sed 批量替换 dist 绕过；**v2.0 根治：** `.env.prod` 源头改为本地部署地址（`/api` 相对路径 + `51xuecheng.cn` 域），重新构建即生效
 
 ### 检索
 12. **ES `course-publish` 索引** `mtName/stName` 字段是 `text` 类型，搜索代码做 aggregation 时报 `illegal_argument_exception`
@@ -243,4 +243,4 @@ xc/
 
 ## 许可
 
-仅作学习/简历用途，原 xuecheng-plus 版权归黑马程序员所有。
+仅作学习交流用途。
