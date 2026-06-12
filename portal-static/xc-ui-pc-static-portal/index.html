@@ -739,15 +739,15 @@
             });
         }
         load('/api/search/course/list?pageNo=1&pageSize=5',
-             '.recommend-list .Recommend > .content', '');
+             '.conten-list .Recommend > .content', '');
         load('/api/search/course/list?pageNo=1&pageSize=4&mt=' + encodeURIComponent('编程开发'),
-             '.recommend-list .course-box:eq(0) .cont-right',
+             '.conten-list .course-box:eq(0) .cont-right',
              '<div><img src="img/widget-ind-top.png" width="100%" alt=""></div>');
         load('/api/search/course/list?pageNo=1&pageSize=4',
-             '.recommend-list .course-box:eq(1) .cont-right',
+             '.conten-list .course-box:eq(1) .cont-right',
              '<div><img src="img/widget-ind-top1.png" width="100%" alt=""></div>');
-        $('.recommend-list .queryall').attr('href','/course/search.html');
-        $('.recommend-list .course-nav span a').each(function(){
+        $('.conten-list .queryall').attr('href','/course/search.html');
+        $('.conten-list .course-nav span a').each(function(){
             var t = $.trim($(this).text());
             var grade = {'基础课程':'204001','就业课程':'204002','高级课程':'204003'}[t] || '';
             $(this).attr('href','/course/search.html' + (grade ? '?grade='+grade : ''));
