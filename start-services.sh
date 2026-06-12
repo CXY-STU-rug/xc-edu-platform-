@@ -1,7 +1,7 @@
 #!/bin/bash
 # Launch all 9 microservices as detached java -jar processes
 JAVA="C:/Program Files/Java/jdk1.8.0_202/bin/java.exe"
-PROJ="C:/Users/liyuq/OneDrive/桌面/新建文件夹/xc/xuecheng-plus-project"
+PROJ="C:/Users/liyuq/OneDrive/桌面/学成在线Java后端项目/xc/xuecheng-plus-project"
 LOGS="C:/docker-data/xc-logs"
 JVM="-Xms256m -Xmx512m -Dfile.encoding=UTF-8"
 
