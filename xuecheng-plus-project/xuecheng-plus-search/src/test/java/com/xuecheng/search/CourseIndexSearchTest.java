@@ -31,7 +31,7 @@ public class CourseIndexSearchTest {
    courseIndex.setName("Java编程思想");
    courseIndex.setDescription("《Java编程思想》是2007年6月1日机械工业出版社出版的图书，作者是埃克尔，译者是陈昊鹏。主要内容本书赢得了全球程序员的广泛赞誉，即使是最晦涩的概念，在Bruce Eckel的文字亲和力和小而直接的编程示例面前也会化解于无形。从Java的基础语法到最高级特性（深入的面向对象概念、多线程、自动项目构建、单元测试和调试等），本书都能逐步指导你轻松掌握。从本书获得的各项大奖以及来自世界各地的读者评论中，不难看出这是一本经典之作");
    courseIndex.setCompanyId(100000L);
-   courseIndex.setCompanyName("北京黑马程序");
+   courseIndex.setCompanyName("学成教育科技");
    courseIndex.setCharge("10011");
    courseIndex.setMt("1-1");
    courseIndex.setSt("1-1-1");
@@ -60,7 +60,7 @@ public class CourseIndexSearchTest {
    courseIndex.setName("Java编程思想");
    courseIndex.setDescription("《Java编程思想》是2007年6月1日机械工业出版社出版的图书，作者是埃克尔，译者是陈昊鹏。主要内容本书赢得了全球程序员的广泛赞誉，即使是最晦涩的概念，在Bruce Eckel的文字亲和力和小而直接的编程示例面前也会化解于无形。从Java的基础语法到最高级特性（深入的面向对象概念、多线程、自动项目构建、单元测试和调试等），本书都能逐步指导你轻松掌握。从本书获得的各项大奖以及来自世界各地的读者评论中，不难看出这是一本经典之作");
    courseIndex.setCompanyId(100000L);
-   courseIndex.setCompanyName("北京黑马程序");
+   courseIndex.setCompanyName("学成教育科技");
    courseIndex.setCharge("10011");
    courseIndex.setMt("1-1");
    courseIndex.setSt("1-1-1");

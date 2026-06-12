@@ -16,17 +16,6 @@
       <!-- 注册 -->
       <register-form v-show="isRegnew" @changeState="changeState"></register-form>
     </div>
-    <!-- <footer>
-      <p>
-        <a href="#">关于我们</a>
-        <a href="#">联系我们</a>
-        <a href="#">客户服务</a>
-        <a href="#">管理团队</a>
-        <a href="#">新手指南</a>
-        <a href="#">合作伙伴</a>
-      </p>
-      <p>地址：北京市昌平区建材城西路金燕龙办公楼一层 邮编：100096 电话：400-618-4000 传真：010-82935100 邮箱：zhanghj@itcast.cn 京ICP备00001号 公安网安备110112119号</p>
-    </footer>-->
   </div>
 </template>
 
